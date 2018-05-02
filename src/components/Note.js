@@ -3,8 +3,15 @@ import './Note.css';
 
 class Note extends Component {
 
-  state = {
-    editingTitle: false,
+  constructor() {
+    super();
+
+    this.titleTextarea = React.createRef();
+  }
+
+  componentDidMount() {
+    this.titleTextarea.current.style.height = '5px';
+    this.titleTextarea.current.style.height = this.titleTextarea.current.scrollHeight + 'px';
   }
 
   handleContentChange = e => {
@@ -16,11 +23,15 @@ class Note extends Component {
   handleTitleChange = e => {
     const { note, updateNote } = this.props;
 
-    updateNote(e.target.value, note.content );
+    if (e.target.value.charAt(e.target.value.length - 1) === '\n') return;
+
+    e.target.style.height = '5px';
+    e.target.style.height = e.target.scrollHeight + 'px';
+
+    updateNote(e.target.value, note.content);
   }
 
   render() {
-    const { editingTitle } = this.state;
     const { note, deleteNote } = this.props;
 
     if (!note) return (
@@ -32,7 +43,8 @@ class Note extends Component {
     return (
       <div className="Note">
         <div>
-          <input
+          <textarea
+            ref={this.titleTextarea}
             value={note.title}
             onChange={this.handleTitleChange}
             className="Note-title"

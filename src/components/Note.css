@@ -4,10 +4,13 @@
 }
 
 .Note-title {
+  width: 100%;
+  max-width: 100%;
+  margin-top: 20px;
   font-size: 26px;
   border: none;
   outline: none;
-  margin-top: 20px;
+  resize: none;
 }
 
 .Note-content {
